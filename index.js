@@ -30,6 +30,25 @@ const server = http.createServer((req, res) => {
             break;
         }
     }
+    if (req.method === 'POST') {
+        switch (req.url) {
+            case '/users':
+                // chunk
+                let jsonString = '';
+                req.on('data', (chunk) => {
+                    jsonString += chunk;
+                });
+                req.on('end', () => {
+                    console.log(jsonString);
+                    res.end('data receive');
+                });
+                break;
+        
+            default:
+                res.end('not found');
+                break;
+        }
+    }
     // console.log('req --> ', req);
     // console.log('res --> ', res);
     // console.log('req method --> ', req.method);
